@@ -1,0 +1,19 @@
+[package]
+name = "mnl-sys"
+version = "0.1.0"
+authors = ["Mullvad VPN <admin@mullvad.net>", "Linus Färnstrand <faern@faern.net>"]
+license = "MIT/Apache-2.0"
+description = "Low level FFI bindings to libmnl. A minimalistic user-space library oriented to Netlink developers"
+repository = "https://github.com/mullvad/mnl-rs"
+keywords = ["netlink", "libmnl"]
+categories = ["network-programming", "os::unix-apis", "external-ffi-bindings", "no-std"]
+
+[badges]
+travis-ci = { repository = "mullvad/mnl-rs" }
+
+
+[target.'cfg(target_os = "linux")'.dependencies]
+libc = "0.2"
+
+[target.'cfg(target_os = "linux")'.build-dependencies]
+pkg-config = "0.3"
