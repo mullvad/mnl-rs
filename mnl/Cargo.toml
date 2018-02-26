@@ -17,6 +17,5 @@ default = ["mnl-sys/default"]
 mnl-1-0-4 = ["mnl-sys/mnl-1-0-4"]
 
 [dependencies]
-libc = { version = "0.2", git = "https://github.com/faern/libc" }
 log = "0.4"
 mnl-sys = { path = "../mnl-sys", version = "0.1", default-features = false }
