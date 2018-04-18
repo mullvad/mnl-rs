@@ -16,7 +16,7 @@ default = ["mnl-1-0-4"]
 mnl-1-0-4 = []
 
 [dependencies]
-libc = "0.2.37"
+libc = "0.2.40"
 
 [build-dependencies]
 pkg-config = "0.3"

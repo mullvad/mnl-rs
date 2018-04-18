@@ -1,5 +1,5 @@
-use mnl_sys;
-use mnl_sys::libc::{self, c_uint, c_void};
+use libc;
+use mnl_sys::{self, c_uint, c_void};
 
 use std::io;
 use std::mem;

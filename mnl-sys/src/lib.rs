@@ -18,7 +18,7 @@
 #![no_std]
 #![cfg(target_os = "linux")]
 
-pub extern crate libc;
+extern crate libc;
 
 #[allow(non_snake_case)]
 pub fn MNL_SOCKET_BUFFER_SIZE() -> libc::c_long {
