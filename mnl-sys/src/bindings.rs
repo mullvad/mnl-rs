@@ -31,16 +31,10 @@ pub type mnl_cb_t = Option<unsafe extern "C" fn(nlh: *const nlmsghdr, data: *mut
 
 
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct mnl_socket {
-    _unused: [u8; 0],
-}
+pub struct mnl_socket(c_void);
 
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct mnl_nlmsg_batch {
-    _unused: [u8; 0],
-}
+pub struct mnl_nlmsg_batch(c_void);
 
 extern "C" {
     pub fn mnl_socket_open(bus: c_int) -> *mut mnl_socket;
