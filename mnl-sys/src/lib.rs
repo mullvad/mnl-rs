@@ -27,6 +27,11 @@ pub fn MNL_SOCKET_BUFFER_SIZE() -> libc::c_long {
     ::core::cmp::min(pagesize, MAX)
 }
 
+#[allow(non_snake_case)]
+pub fn MNL_ALIGN(len: i32) -> i32 {
+    ((len) + MNL_ALIGNTO - 1) & !(MNL_ALIGNTO - 1)
+}
+
 #[allow(non_camel_case_types)]
 mod bindings;
 pub use bindings::*;
