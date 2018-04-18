@@ -34,6 +34,7 @@
 #![cfg(target_os = "linux")]
 #![deny(missing_docs)]
 
+extern crate libc;
 #[macro_use]
 extern crate log;
 pub extern crate mnl_sys;

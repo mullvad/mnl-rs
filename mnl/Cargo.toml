@@ -13,9 +13,9 @@ categories = ["network-programming", "os::unix-apis", "api-bindings"]
 travis-ci = { repository = "mullvad/mnl-rs" }
 
 [features]
-default = ["mnl-sys/default"]
 mnl-1-0-4 = ["mnl-sys/mnl-1-0-4"]
 
 [dependencies]
+libc = "0.2.40"
 log = "0.4"
-mnl-sys = { path = "../mnl-sys", version = "0.1", default-features = false }
+mnl-sys = { path = "../mnl-sys", version = "0.1" }
