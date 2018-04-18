@@ -12,7 +12,6 @@ categories = ["network-programming", "os::unix-apis", "external-ffi-bindings", "
 travis-ci = { repository = "mullvad/mnl-rs" }
 
 [features]
-default = ["mnl-1-0-4"]
 mnl-1-0-4 = []
 
 [dependencies]
