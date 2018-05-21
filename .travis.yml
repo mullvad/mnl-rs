@@ -12,16 +12,14 @@ addons:
     packages:
     - libmnl-dev
 
-before_script:
-  - rustup component add rustfmt-preview
-  - rustfmt --version
-
 script:
   - cd mnl/
   - cargo build --verbose --no-default-features
   - cargo test --verbose --no-default-features
   - cd ../
   - if [ "${TRAVIS_RUST_VERSION}" = "nightly" ]; then
+      rustup component add rustfmt-preview;
+      rustfmt --version;
       cargo fmt -- --check --unstable-features;
     else
       echo "Not checking formatting on this build";
