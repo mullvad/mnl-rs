@@ -4,6 +4,7 @@ rust:
   - nightly
   - stable
   - beta
+  - 1.19
 os:
   - linux
 
