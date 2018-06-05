@@ -22,7 +22,7 @@ script:
   - cargo test --verbose --no-default-features
   - cd ../
   - if [ "${TRAVIS_RUST_VERSION}" = "nightly" ]; then
-      cargo fmt -- --write-mode=diff;
+      cargo fmt -- --check --unstable-features;
     else
       echo "Not checking formatting on this build";
     fi
