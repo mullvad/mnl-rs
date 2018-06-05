@@ -1,4 +1,4 @@
-use mnl_sys::{self, c_int, c_void, nlmsghdr};
+use mnl_sys::{self, c_void};
 
 use std::io;
 use std::ptr;
