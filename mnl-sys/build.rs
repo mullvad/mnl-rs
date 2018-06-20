@@ -11,7 +11,8 @@ const MIN_VERSION: &str = "1.0.3";
 
 #[cfg(target_os = "linux")]
 fn main() {
-    if let Ok(lib_dir) = env::var("LIBMNL_LIB_DIR").map(PathBuf::from) {
+    println!("cargo:rerun-if-env-changed=LIBMNL_LIB_DIR");
+    if let Some(lib_dir) = env::var_os("LIBMNL_LIB_DIR").map(PathBuf::from) {
         if !lib_dir.is_dir() {
             panic!(
                 "libmnl library directory does not exist: {}",
