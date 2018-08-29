@@ -1,4 +1,4 @@
-use mnl_sys::{self, c_void};
+use mnl_sys::{self, libc};
 
 use std::io;
 use std::ptr;
@@ -16,7 +16,7 @@ pub enum CbResult {
 /// Callback runqueue for netlink messages. Checks that all netlink messages in `buffer` are OK.
 pub fn cb_run(buffer: &[u8], seq: u32, portid: u32) -> io::Result<CbResult> {
     let len = buffer.len();
-    let buf = buffer.as_ptr() as *const c_void;
+    let buf = buffer.as_ptr() as *const libc::c_void;
     debug!("Processing {} byte netlink message", len);
     match unsafe { mnl_sys::mnl_cb_run(buf, len, seq, portid, None, ptr::null_mut()) } {
         i if i <= -1 => Err(io::Error::last_os_error()),

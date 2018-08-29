@@ -1,5 +1,8 @@
 use libc;
-use mnl_sys::{self, c_uint, c_void};
+use mnl_sys::{
+    self,
+    libc::{c_uint, c_void, pid_t},
+};
 
 use std::io;
 use std::mem;
@@ -101,7 +104,7 @@ impl Socket {
     }
 
     /// Bind the Netlink socket.
-    pub fn bind(&self, groups: c_uint, pid: libc::pid_t) -> io::Result<()> {
+    pub fn bind(&self, groups: c_uint, pid: pid_t) -> io::Result<()> {
         cvt(unsafe { mnl_sys::mnl_socket_bind(self.socket, groups, pid) })?;
         Ok(())
     }
@@ -145,7 +148,7 @@ impl Socket {
     }
 
     /// Obtain Netlink PortID from netlink socket.
-    pub fn portid(&self) -> libc::c_uint {
+    pub fn portid(&self) -> c_uint {
         unsafe { mnl_sys::mnl_socket_get_portid(self.socket) }
     }
 
