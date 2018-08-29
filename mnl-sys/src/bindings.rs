@@ -1,5 +1,5 @@
 use core::option::Option;
-pub use libc::{c_char, c_int, c_uint, c_void, nlattr, nlmsghdr, pid_t, socklen_t, FILE};
+use libc::{c_char, c_int, c_uint, c_void, nlattr, nlmsghdr, pid_t, socklen_t, FILE};
 
 pub const MNL_SOCKET_AUTOPID: c_int = 0;
 pub const MNL_ALIGNTO: c_int = 4;
