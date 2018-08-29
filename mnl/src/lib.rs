@@ -6,15 +6,21 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Safe abstraction for [`libmnl`]. A minimalistic user-space library oriented to Netlink
+//! Safe abstraction for [`libmnl`], a minimalistic user-space library oriented to Netlink
 //! developers. See [`mnl-sys`] for the low level FFI bindings to the C library.
 //!
 //! This is work in progress and does not implement all of [`libmnl`] yet. Feel free to submit PRs
 //! to support the parts you need!
 //!
-//! The initial focus here was to support sockets and the parsing of responses. So so far the best
-//! covered parts are `mnl_socket_*` and `mnl_cb_run`. However the netlink messages are just
-//! treated as raw byte buffers. It might make sense to add some abstraction struct at some point.
+//! The initial focus here was to support sockets and the parsing of responses. So far, the parts
+//! that are covered the best are `mnl_socket_*` and `mnl_cb_run`. However the netlink messages are
+//! just treated as raw byte buffers. It might make sense to add some abstraction struct at some
+//! point.
+//!
+//! # Selecting version of `libmnl`
+//!
+//! See the documentation for the corresponding sys crate for details: [`mnl-sys`].
+//! This crate has the same features as the sys crate, so the same features applies here.
 //!
 //! # Prior/related work
 //!
