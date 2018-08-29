@@ -16,6 +16,10 @@
 //! covered parts are `mnl_socket_*` and `mnl_cb_run`. However the netlink messages are just
 //! treated as raw byte buffers. It might make sense to add some abstraction struct at some point.
 //!
+//! # Selecting version of `libmnl`
+//!
+//! See the documentation for the corresponding sys crate for details: [`mnl-sys`]
+//!
 //! # Prior/related work
 //!
 //! The [`crslmnl`] crate is another wrapper around [`libmnl`]. At this stage it is a far more

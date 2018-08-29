@@ -5,6 +5,7 @@ authors = ["Mullvad VPN <admin@mullvad.net>", "Linus Färnstrand <faern@faern.ne
 license = "MIT/Apache-2.0"
 description = "Low level FFI bindings to libmnl. A minimalistic user-space library oriented to Netlink developers"
 repository = "https://github.com/mullvad/mnl-rs"
+readme = "README.md"
 keywords = ["netlink", "libmnl"]
 categories = ["network-programming", "os::unix-apis", "external-ffi-bindings", "no-std"]
 
