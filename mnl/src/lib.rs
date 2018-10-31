@@ -40,17 +40,14 @@
 #![cfg(target_os = "linux")]
 #![deny(missing_docs)]
 
-extern crate libc;
-#[macro_use]
-extern crate log;
-pub extern crate mnl_sys;
+pub use mnl_sys;
 
 /// Module for helper functions checking FFI return values for error codes.
 /// "cvt" stands for "check value T", where T is the return value
 mod cvt;
 
 mod callback;
-pub use callback::*;
+pub use crate::callback::*;
 
 mod socket;
-pub use socket::*;
+pub use crate::socket::*;

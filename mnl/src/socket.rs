@@ -1,14 +1,15 @@
 use libc;
+use log::debug;
 use mnl_sys::{
     self,
     libc::{c_uint, c_void, pid_t},
 };
+use std::{
+    io, mem,
+    os::unix::io::{AsRawFd, RawFd},
+};
 
-use std::io;
-use std::mem;
-use std::os::unix::io::{AsRawFd, RawFd};
-
-use cvt::cvt;
+use crate::cvt::cvt;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 #[allow(missing_docs)]
@@ -41,7 +42,7 @@ impl Bus {
     /// Converts the given integer to a netlink bus variant. Returns `None` if the value does
     /// not match any bus.
     pub fn try_from(bus: i32) -> Option<Self> {
-        use Bus::*;
+        use crate::Bus::*;
         let variant = match bus {
             libc::NETLINK_ROUTE => Route,
             libc::NETLINK_UNUSED => Unused,

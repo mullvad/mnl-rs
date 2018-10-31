@@ -40,7 +40,7 @@
 #![no_std]
 #![cfg(target_os = "linux")]
 
-pub extern crate libc;
+pub use libc;
 
 #[allow(non_snake_case)]
 pub fn MNL_SOCKET_BUFFER_SIZE() -> libc::c_long {
@@ -56,4 +56,4 @@ pub fn MNL_ALIGN(len: i32) -> i32 {
 
 #[allow(non_camel_case_types)]
 mod bindings;
-pub use bindings::*;
+pub use crate::bindings::*;

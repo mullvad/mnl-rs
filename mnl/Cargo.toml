@@ -8,6 +8,7 @@ repository = "https://github.com/mullvad/mnl-rs"
 readme = "../README.md"
 keywords = ["netlink", "libmnl"]
 categories = ["network-programming", "os::unix-apis", "api-bindings"]
+edition = "2018"
 
 [badges]
 travis-ci = { repository = "mullvad/mnl-rs" }
