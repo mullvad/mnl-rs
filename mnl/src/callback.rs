@@ -1,7 +1,7 @@
 use mnl_sys::{self, libc};
 
-use std::io;
-use std::ptr;
+use log::debug;
+use std::{io, ptr};
 
 
 /// The result of processing a batch of netlink responses.
@@ -61,7 +61,7 @@ pub fn cb_run2<T>(
 
 
 /// Internal struct for helping to convert the unsafe FFI callback to the safe `Callback`.
-struct CallbackContext<'a, T: 'a> {
+struct CallbackContext<'a, T> {
     pub callback: Callback<T>,
     pub data: &'a mut T,
 }
@@ -71,6 +71,7 @@ extern "C" fn callback_wrapper<T>(
     nlh: *const libc::nlmsghdr,
     data: *mut libc::c_void,
 ) -> libc::c_int {
-    let context: &mut CallbackContext<T> = unsafe { &mut *(data as *mut CallbackContext<T>) };
+    let context: &mut CallbackContext<'_, T> =
+        unsafe { &mut *(data as *mut CallbackContext<'_, T>) };
     (context.callback)(unsafe { &*nlh }, context.data)
 }
