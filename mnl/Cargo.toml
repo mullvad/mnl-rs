@@ -1,6 +1,6 @@
 [package]
 name = "mnl"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Mullvad VPN <admin@mullvad.net>", "Linus Färnstrand <faern@faern.net>"]
 license = "MIT/Apache-2.0"
 description = "Safe abstraction for libmnl, a minimalistic user-space library oriented to Netlink developers"
@@ -19,4 +19,4 @@ mnl-1-0-4 = ["mnl-sys/mnl-1-0-4"]
 [dependencies]
 libc = "0.2.40"
 log = "0.4"
-mnl-sys = { path = "../mnl-sys", version = "0.1" }
+mnl-sys = { path = "../mnl-sys", version = "0.2" }
