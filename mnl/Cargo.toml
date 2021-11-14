@@ -17,6 +17,6 @@ travis-ci = { repository = "mullvad/mnl-rs" }
 mnl-1-0-4 = ["mnl-sys/mnl-1-0-4"]
 
 [dependencies]
-libc = "0.2.40"
+libc = "0.2.107"
 log = "0.4"
 mnl-sys = { path = "../mnl-sys", version = "0.2" }
