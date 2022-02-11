@@ -1,6 +1,6 @@
 [package]
 name = "mnl-sys"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Mullvad VPN <admin@mullvad.net>", "Linus Färnstrand <faern@faern.net>"]
 license = "MIT/Apache-2.0"
 description = "Low level FFI bindings to libmnl. A minimalistic user-space library oriented to Netlink developers"

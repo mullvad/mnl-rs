@@ -15,9 +15,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.2.1] - 2022-02-11
+### Fixed
+- Specify dependency versions more exactly to allow building with minimal versions
+  of the entire dependency tree
 
 
-## [0.2.0] - 2019-09-XX <- UPDATE BEFORE MERGING
+## [0.2.0] - 2019-09-23
 ### Added
 - Add `cb_run2` with support for callback closures.
 
