@@ -20,4 +20,4 @@ mnl-1-0-4 = []
 libc = "0.2.41"
 
 [build-dependencies]
-pkg-config = "0.3"
+pkg-config = "0.3.16"
