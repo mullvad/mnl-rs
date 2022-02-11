@@ -1,6 +1,5 @@
 use mnl_sys::{self, libc};
 
-use log::debug;
 use std::{io, ptr};
 
 
@@ -22,7 +21,7 @@ pub type Callback<T> = fn(msg: &libc::nlmsghdr, data: &mut T) -> libc::c_int;
 pub fn cb_run(buffer: &[u8], seq: u32, portid: u32) -> io::Result<CbResult> {
     let len = buffer.len();
     let buf = buffer.as_ptr() as *const libc::c_void;
-    debug!("Processing {} byte netlink message without a callback", len);
+    log::debug!("Processing {} byte netlink message without a callback", len);
     match unsafe { mnl_sys::mnl_cb_run(buf, len, seq, portid, None, ptr::null_mut()) } {
         i if i <= mnl_sys::MNL_CB_ERROR => Err(io::Error::last_os_error()),
         mnl_sys::MNL_CB_STOP => Ok(CbResult::Stop),
@@ -42,7 +41,7 @@ pub fn cb_run2<T>(
     let len = buffer.len();
     let buf = buffer.as_ptr() as *const libc::c_void;
     let mut callback_context = CallbackContext { callback, data };
-    debug!("Processing {} byte netlink message with callback", len);
+    log::debug!("Processing {} byte netlink message with callback", len);
     match unsafe {
         mnl_sys::mnl_cb_run(
             buf,
