@@ -1,5 +1,4 @@
 use libc;
-use log::debug;
 use mnl_sys::{
     self,
     libc::{c_uint, c_void, pid_t},
@@ -115,7 +114,7 @@ impl Socket {
     pub fn send(&self, data: &[u8]) -> io::Result<usize> {
         let len = data.len();
         let ptr = data.as_ptr() as *const c_void;
-        debug!("Sending {} byte netlink message", len);
+        log::debug!("Sending {} byte netlink message", len);
         let result = cvt(unsafe { mnl_sys::mnl_socket_sendto(self.socket, ptr, len) })?;
         Ok(result as usize)
     }
