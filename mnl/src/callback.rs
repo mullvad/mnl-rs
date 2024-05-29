@@ -2,7 +2,6 @@ use mnl_sys::{self, libc};
 
 use std::{io, ptr};
 
-
 /// The result of processing a batch of netlink responses.
 pub enum CbResult {
     /// Everything went fine and this batch is finished processing.
@@ -15,7 +14,6 @@ pub enum CbResult {
 /// Callback function signature.
 /// TODO: Write abstraction for `nlmsghdr` that can reach all fields and payload.
 pub type Callback<T> = fn(msg: &libc::nlmsghdr, data: &mut T) -> libc::c_int;
-
 
 /// Callback runqueue for netlink messages. Checks that all netlink messages in `buffer` are OK.
 pub fn cb_run(buffer: &[u8], seq: u32, portid: u32) -> io::Result<CbResult> {
@@ -57,7 +55,6 @@ pub fn cb_run2<T>(
         _ => Ok(CbResult::Ok),
     }
 }
-
 
 /// Internal struct for helping to convert the unsafe FFI callback to the safe `Callback`.
 struct CallbackContext<'a, T> {

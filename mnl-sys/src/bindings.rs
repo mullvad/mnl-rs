@@ -29,7 +29,6 @@ pub type mnl_attr_cb_t =
 
 pub type mnl_cb_t = Option<unsafe extern "C" fn(nlh: *const nlmsghdr, data: *mut c_void) -> c_int>;
 
-
 #[repr(C)]
 pub struct mnl_socket(c_void);
 

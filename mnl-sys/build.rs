@@ -8,7 +8,6 @@ const MIN_VERSION: &str = "1.0.4";
 #[cfg(not(feature = "mnl-1-0-4"))]
 const MIN_VERSION: &str = "1.0.3";
 
-
 #[cfg(target_os = "linux")]
 fn main() {
     println!("cargo:rerun-if-env-changed=LIBMNL_LIB_DIR");

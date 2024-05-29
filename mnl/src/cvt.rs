@@ -1,6 +1,5 @@
 use std::io;
 
-
 pub trait IsMinusOne {
     fn is_minus_one(&self) -> bool;
 }
@@ -27,13 +26,13 @@ impl<T: IsMinusOne> IsError for T {
 
 impl<T> IsError for *const T {
     fn is_error(&self) -> bool {
-        (*self as *const T).is_null()
+        self.is_null()
     }
 }
 
 impl<T> IsError for *mut T {
     fn is_error(&self) -> bool {
-        (*self as *mut T).is_null()
+        self.is_null()
     }
 }
 
