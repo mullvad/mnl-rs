@@ -69,7 +69,6 @@ impl Bus {
     }
 }
 
-
 /// A netlink socket. Wraps the underlying `libmnl` `mnl_socket` struct and provides a safe Rust
 /// API.
 ///

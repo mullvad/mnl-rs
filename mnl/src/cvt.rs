@@ -1,6 +1,5 @@
 use std::io;
 
-
 pub trait IsMinusOne {
     fn is_minus_one(&self) -> bool;
 }
