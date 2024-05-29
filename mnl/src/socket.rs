@@ -1,4 +1,3 @@
-use libc;
 use mnl_sys::{
     self,
     libc::{c_uint, c_void, pid_t},
