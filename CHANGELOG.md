@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+### Changed
+- `mnl::socket::Socket::as_raw_fd` is now appropriatly marked as unsafe.
 
 ## [0.2.2] - 2022-02-11
 ### Fixed

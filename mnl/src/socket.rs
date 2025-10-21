@@ -159,7 +159,11 @@ impl Socket {
 
     /// Returns the pointer to the underlying C struct. Can be used with the `mnl_sys` crate to
     /// perform actions not yet exposed in this safe abstraction.
-    pub fn as_raw_socket(&self) -> *mut mnl_sys::mnl_socket {
+    ///
+    /// # Safety
+    ///
+    /// The caller must ensure that the returned pointer is not freed or invalidated.
+    pub unsafe fn as_raw_socket(&self) -> *mut mnl_sys::mnl_socket {
         self.socket
     }
 }
