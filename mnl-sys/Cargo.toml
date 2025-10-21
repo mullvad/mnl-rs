@@ -9,6 +9,7 @@ readme = "README.md"
 keywords = ["netlink", "libmnl"]
 categories = ["network-programming", "os::unix-apis", "external-ffi-bindings", "no-std"]
 edition = "2018"
+links = "mnl"
 
 [badges]
 travis-ci = { repository = "mullvad/mnl-rs" }
