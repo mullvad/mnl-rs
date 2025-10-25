@@ -8,9 +8,20 @@ repository.
 
 ## Linking to libmnl
 
-By default this crate uses pkg-config to find and link to [`libmnl`]. To manually configure
-where to look for the library, set the environment variable `LIBMNL_LIB_DIR` to point to the
-directory where `libmnl.so` or `libmnl.a` resides.
+### `pkg-config`
+By default this crate uses pkg-config to find and link [`libmnl`].
+
+### Manually
+To manually configure where to look for the library, set the environment variable `LIBMNL_LIB_DIR`
+to point to the directory where `libmnl.so` or `libmnl.a` resides, or [`override the build script`]
+to manually set the linker directives for `mnl`:
+
+```toml
+# .cargo/config.toml
+[target.x86_64-unknown-linux-gnu.mnl]
+rustc-link-lib = ["mnl"]
+rustc-link-search = ["<type>=<path-to-libmnl>"]
+```
 
 ## Selecting version of `libmnl`
 
@@ -30,5 +41,6 @@ mnl-sys = { version = "0.1", features = ["mnl-1-0-4"] }
 [`libmnl`]: https://netfilter.org/projects/libmnl/
 [`mnl`]: https://crates.io/crates/mnl
 [`bindgen`]: https://crates.io/crates/bindgen
+[`override the build script`]: https://doc.rust-lang.org/cargo/reference/build-scripts.html#overriding-build-scripts
 
 License: MIT/Apache-2.0
