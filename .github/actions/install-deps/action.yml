@@ -1,0 +1,11 @@
+---
+name: "Install libmnl"
+description: "Set up build environment with libmnl"
+runs:
+  using: "composite"
+  steps:
+    - name: Install build dependencies
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libmnl-dev
