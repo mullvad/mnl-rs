@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+
+
+## [0.2.3] - 2025-10-28
 ### Added
 - Specify `links` manifest key `mnl-sys`. This allows dependants to pass custom build flags.
 

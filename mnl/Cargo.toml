@@ -1,6 +1,6 @@
 [package]
 name = "mnl"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["Mullvad VPN <admin@mullvad.net>", "Linus Färnstrand <faern@faern.net>"]
 license = "MIT/Apache-2.0"
 description = "Safe abstraction for libmnl, a minimalistic user-space library oriented to Netlink developers"
@@ -9,6 +9,7 @@ readme = "../README.md"
 keywords = ["netlink", "libmnl"]
 categories = ["network-programming", "os::unix-apis", "api-bindings"]
 edition = "2018"
+rust-version = "1.38"
 
 [badges]
 travis-ci = { repository = "mullvad/mnl-rs" }
@@ -19,4 +20,4 @@ mnl-1-0-4 = ["mnl-sys/mnl-1-0-4"]
 [dependencies]
 libc = "0.2.40"
 log = "0.4.4"
-mnl-sys = { path = "../mnl-sys", version = "0.2.1" }
+mnl-sys = { path = "../mnl-sys", version = "0.2.2" }
