@@ -7,7 +7,7 @@ use std::{
     os::unix::io::{AsRawFd, RawFd},
 };
 
-use crate::cvt::cvt;
+use crate::{cvt::cvt, NlMessages};
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 #[allow(missing_docs)]
@@ -135,12 +135,37 @@ impl Socket {
         Ok(())
     }
 
-    /// Receives a Netlink message from the socket. Returns the number of bytes written to `buffer`
-    /// on success. If the message does not fit in the provided buffer an error will be returned
-    /// a partial message will be written to `buffer` and the rest discarded.
-    pub fn recv(&self, buffer: &mut [u8]) -> io::Result<usize> {
+    /// Receive a Netlink message from the socket.
+    ///
+    /// Returns an iterator of Netlink messages on success.
+    ///
+    /// ```
+    /// fn recv(socket: &mnl::Socket) {
+    ///     let mut buffer = vec![0; 4096];
+    ///     for message in socket.recv(&mut buffer).expect("recv failed") {
+    ///         let message = message.expect("message decoding failed");
+    ///         println!("Received message of len: {}", message.len());
+    ///     };
+    /// }
+    /// ```
+    ///
+    /// `buffer` must be aligned to `size_of::<nlmsghdr>`.
+    pub fn recv<'a>(&self, buffer: &'a mut [u8]) -> io::Result<NlMessages<'a>> {
+        let n = self.recv_raw(buffer)?;
+        Ok(NlMessages::new(&buffer[..n]))
+    }
+
+    /// Receive a number of Netlink messages from the socket.
+    ///
+    /// Returns the number of bytes written to `buffer` on success.
+    ///
+    /// If the message does not fit in the provided buffer an error will be returned,
+    /// a partial message will be written to `buffer`, and the rest discarded.
+    ///
+    /// `buffer` must be aligned to `size_of::<nlmsghdr>`.
+    pub fn recv_raw(&self, buffer: &mut [u8]) -> io::Result<usize> {
         let len = buffer.len();
-        let ptr = buffer.as_mut_ptr() as *mut c_void;
+        let ptr = buffer.as_mut_ptr().cast::<c_void>();
         let result = cvt(unsafe { mnl_sys::mnl_socket_recvfrom(self.socket, ptr, len) })?;
         Ok(result as usize)
     }
