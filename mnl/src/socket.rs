@@ -38,7 +38,7 @@ pub enum Bus {
 }
 
 impl Bus {
-    /// Converts the given integer to a netlink bus variant. Returns `None` if the value does
+    /// Convert the given integer to a netlink bus variant. Returns `None` if the value does
     /// not match any bus.
     pub fn try_from(bus: i32) -> Option<Self> {
         use crate::Bus::*;
@@ -82,7 +82,7 @@ pub struct Socket {
 }
 
 impl Socket {
-    /// Opens a new Netlink socket to the given bus ID, and binds it to group zero and with an
+    /// Open a new Netlink socket to the given bus ID, and binds it to group zero and with an
     /// automatic port id (MNL_SOCKET_AUTOPID).
     ///
     /// Use [`open`] and [`bind`] for more fine grained control.
@@ -95,7 +95,7 @@ impl Socket {
         Ok(socket)
     }
 
-    /// Opens a new Netlink socket to the given bus ID.
+    /// Open a new Netlink socket to the given bus ID.
     pub fn open(bus: Bus) -> io::Result<Self> {
         Ok(Socket {
             socket: cvt(unsafe { mnl_sys::mnl_socket_open(bus as i32) })?,
@@ -108,7 +108,7 @@ impl Socket {
         Ok(())
     }
 
-    /// Sends a Netlink message with the given slice of data. Returns the number of bytes sent if
+    /// Send a Netlink message with the given slice of data. Returns the number of bytes sent if
     /// successful.
     pub fn send(&self, data: &[u8]) -> io::Result<usize> {
         let len = data.len();
@@ -118,7 +118,7 @@ impl Socket {
         Ok(result as usize)
     }
 
-    /// Sends all messages in an iterator to the socket. Aborts as soon as an error is encountered.
+    /// Send all messages in an iterator to the socket. Aborts as soon as an error is encountered.
     /// Aborts and returns `Other` error if a send operation returned without sending the entire
     /// message.
     pub fn send_all<'a, I>(&self, iter: I) -> io::Result<()>
@@ -182,14 +182,14 @@ impl Socket {
         unsafe { mnl_sys::mnl_socket_get_portid(self.socket) }
     }
 
-    /// Tries to close the socket, returns the corresponding error on failure.
+    /// Try to close the socket, returns the corresponding error on failure.
     pub fn close(self) -> io::Result<()> {
         cvt(unsafe { mnl_sys::mnl_socket_close(self.socket) })?;
         mem::forget(self);
         Ok(())
     }
 
-    /// Returns the pointer to the underlying C struct. Can be used with the `mnl_sys` crate to
+    /// Return the pointer to the underlying C struct. Can be used with the `mnl_sys` crate to
     /// perform actions not yet exposed in this safe abstraction.
     pub fn as_raw_socket(&self) -> *mut mnl_sys::mnl_socket {
         self.socket
