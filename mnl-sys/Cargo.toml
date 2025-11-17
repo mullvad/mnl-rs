@@ -8,8 +8,8 @@ repository = "https://github.com/mullvad/mnl-rs"
 readme = "README.md"
 keywords = ["netlink", "libmnl"]
 categories = ["network-programming", "os::unix-apis", "external-ffi-bindings", "no-std"]
-edition = "2018"
-rust-version = "1.38"
+edition = "2024"
+rust-version = "1.85"
 links = "mnl"
 
 [badges]

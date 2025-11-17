@@ -1,3 +1,4 @@
+use libc::nlmsghdr;
 use mnl_sys::{
     self,
     libc::{c_uint, c_void, pid_t},
@@ -7,7 +8,7 @@ use std::{
     os::unix::io::{AsRawFd, RawFd},
 };
 
-use crate::cvt::cvt;
+use crate::{NlMessages, cvt::cvt};
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 #[allow(missing_docs)]
@@ -37,7 +38,7 @@ pub enum Bus {
 }
 
 impl Bus {
-    /// Converts the given integer to a netlink bus variant. Returns `None` if the value does
+    /// Convert the given integer to a netlink bus variant. Returns `None` if the value does
     /// not match any bus.
     pub fn try_from(bus: i32) -> Option<Self> {
         use crate::Bus::*;
@@ -81,7 +82,7 @@ pub struct Socket {
 }
 
 impl Socket {
-    /// Opens a new Netlink socket to the given bus ID, and binds it to group zero and with an
+    /// Open a new Netlink socket to the given bus ID, and binds it to group zero and with an
     /// automatic port id (MNL_SOCKET_AUTOPID).
     ///
     /// Use [`open`] and [`bind`] for more fine grained control.
@@ -94,7 +95,7 @@ impl Socket {
         Ok(socket)
     }
 
-    /// Opens a new Netlink socket to the given bus ID.
+    /// Open a new Netlink socket to the given bus ID.
     pub fn open(bus: Bus) -> io::Result<Self> {
         Ok(Socket {
             socket: cvt(unsafe { mnl_sys::mnl_socket_open(bus as i32) })?,
@@ -107,7 +108,7 @@ impl Socket {
         Ok(())
     }
 
-    /// Sends a Netlink message with the given slice of data. Returns the number of bytes sent if
+    /// Send a Netlink message with the given slice of data. Returns the number of bytes sent if
     /// successful.
     pub fn send(&self, data: &[u8]) -> io::Result<usize> {
         let len = data.len();
@@ -117,7 +118,7 @@ impl Socket {
         Ok(result as usize)
     }
 
-    /// Sends all messages in an iterator to the socket. Aborts as soon as an error is encountered.
+    /// Send all messages in an iterator to the socket. Aborts as soon as an error is encountered.
     /// Aborts and returns `Other` error if a send operation returned without sending the entire
     /// message.
     pub fn send_all<'a, I>(&self, iter: I) -> io::Result<()>
@@ -126,21 +127,49 @@ impl Socket {
     {
         for data in iter {
             if self.send(data)? < data.len() {
-                return Err(io::Error::new(
-                    io::ErrorKind::Other,
-                    "sendto did not send entire message",
-                ));
+                return Err(io::Error::other("sendto did not send entire message"));
             }
         }
         Ok(())
     }
 
-    /// Receives a Netlink message from the socket. Returns the number of bytes written to `buffer`
-    /// on success. If the message does not fit in the provided buffer an error will be returned
-    /// a partial message will be written to `buffer` and the rest discarded.
-    pub fn recv(&self, buffer: &mut [u8]) -> io::Result<usize> {
+    /// Receive a Netlink message from the socket.
+    ///
+    /// Returns an iterator of Netlink messages on success.
+    ///
+    /// ```
+    /// fn recv(socket: &mnl::Socket) {
+    ///     let mut buffer = vec![0; 4096];
+    ///     for message in socket.recv(&mut buffer).expect("recv failed") {
+    ///         let message = message.expect("message decoding failed");
+    ///         println!("Received message of len: {}", message.len());
+    ///     };
+    /// }
+    /// ```
+    ///
+    /// `buffer` must be aligned to `size_of::<nlmsghdr>`.
+    pub fn recv<'a>(&self, buffer: &'a mut [u8]) -> io::Result<NlMessages<'a>> {
+        let n = self.recv_raw(buffer)?;
+        Ok(NlMessages::new(&buffer[..n]))
+    }
+
+    /// Receive a number of Netlink messages from the socket.
+    ///
+    /// Returns the number of bytes written to `buffer` on success.
+    ///
+    /// If the message does not fit in the provided buffer an error will be returned,
+    /// a partial message will be written to `buffer`, and the rest discarded.
+    ///
+    /// # Panics
+    /// Panics with debug_assertions if `buffer` isn't aligned to `nlmsghdr`.
+    pub fn recv_raw(&self, buffer: &mut [u8]) -> io::Result<usize> {
+        debug_assert!(
+            buffer.as_ptr().cast::<nlmsghdr>().is_aligned(),
+            "`buffer` must be aligned to nlmsghdr",
+        );
+
         let len = buffer.len();
-        let ptr = buffer.as_mut_ptr() as *mut c_void;
+        let ptr = buffer.as_mut_ptr().cast::<c_void>();
         let result = cvt(unsafe { mnl_sys::mnl_socket_recvfrom(self.socket, ptr, len) })?;
         Ok(result as usize)
     }
@@ -150,14 +179,14 @@ impl Socket {
         unsafe { mnl_sys::mnl_socket_get_portid(self.socket) }
     }
 
-    /// Tries to close the socket, returns the corresponding error on failure.
+    /// Try to close the socket, returns the corresponding error on failure.
     pub fn close(self) -> io::Result<()> {
         cvt(unsafe { mnl_sys::mnl_socket_close(self.socket) })?;
         mem::forget(self);
         Ok(())
     }
 
-    /// Returns the pointer to the underlying C struct. Can be used with the `mnl_sys` crate to
+    /// Return the pointer to the underlying C struct. Can be used with the `mnl_sys` crate to
     /// perform actions not yet exposed in this safe abstraction.
     pub fn as_raw_socket(&self) -> *mut mnl_sys::mnl_socket {
         self.socket
