@@ -1,0 +1,31 @@
+---
+name: Check SemVer compatibility
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+env:
+  RUST_BACKTRACE: 1
+  CARGO_TERM_COLOR: always
+  CARGO_TERM_VERBOSE: 'true'
+  # The below settings are based on advice from:
+  # https://corrode.dev/blog/tips-for-faster-ci-builds/
+  CARGO_INCREMENTAL: 0
+  CARGO_PROFILE_TEST_DEBUG: 0
+
+jobs:
+  check-semver:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install libmnl
+        uses: ./.github/actions/install-deps
+      - name: mnl
+        uses: obi1kenobi/cargo-semver-checks-action@v2
+        with:
+          manifest-path: mnl/Cargo.toml
+      - name: mnl-sys
+        uses: obi1kenobi/cargo-semver-checks-action@v2
+        with:
+          manifest-path: mnl-sys/Cargo.toml
