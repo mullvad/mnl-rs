@@ -1,3 +1,4 @@
+use libc::nlmsghdr;
 use mnl_sys::{
     self,
     libc::{c_uint, c_void, pid_t},
@@ -162,8 +163,14 @@ impl Socket {
     /// If the message does not fit in the provided buffer an error will be returned,
     /// a partial message will be written to `buffer`, and the rest discarded.
     ///
-    /// `buffer` must be aligned to `size_of::<nlmsghdr>`.
+    /// # Panics
+    /// Panics with debug_assertions if `buffer` isn't aligned to `size_of::<nlmsghdr>`.
     pub fn recv_raw(&self, buffer: &mut [u8]) -> io::Result<usize> {
+        debug_assert!(
+            buffer.as_ptr().cast::<nlmsghdr>().is_aligned(),
+            "`buffer` must be aligned to nlmsghdr",
+        );
+
         let len = buffer.len();
         let ptr = buffer.as_mut_ptr().cast::<c_void>();
         let result = cvt(unsafe { mnl_sys::mnl_socket_recvfrom(self.socket, ptr, len) })?;
