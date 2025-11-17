@@ -7,7 +7,7 @@ use std::{
     os::unix::io::{AsRawFd, RawFd},
 };
 
-use crate::{cvt::cvt, NlMessages};
+use crate::{NlMessages, cvt::cvt};
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 #[allow(missing_docs)]
@@ -126,10 +126,7 @@ impl Socket {
     {
         for data in iter {
             if self.send(data)? < data.len() {
-                return Err(io::Error::new(
-                    io::ErrorKind::Other,
-                    "sendto did not send entire message",
-                ));
+                return Err(io::Error::other("sendto did not send entire message"));
             }
         }
         Ok(())
