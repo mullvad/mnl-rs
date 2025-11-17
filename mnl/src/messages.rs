@@ -159,10 +159,12 @@ mod tests {
 
         let result: Result<Vec<_>, _> = NlMessages::new(&buffer).collect();
         assert!(result.is_err());
-        assert!(result
-            .unwrap_err()
-            .to_string()
-            .contains("Invalid netlink message length"));
+        assert!(
+            result
+                .unwrap_err()
+                .to_string()
+                .contains("Invalid netlink message length")
+        );
     }
 
     #[test]
@@ -173,10 +175,12 @@ mod tests {
 
         let result: Result<Vec<_>, _> = NlMessages::new(&buffer).collect();
         assert!(result.is_err());
-        assert!(result
-            .unwrap_err()
-            .to_string()
-            .contains("exceeds remaining buffer size"));
+        assert!(
+            result
+                .unwrap_err()
+                .to_string()
+                .contains("exceeds remaining buffer size")
+        );
     }
 
     #[test]
