@@ -161,7 +161,7 @@ impl Socket {
     /// a partial message will be written to `buffer`, and the rest discarded.
     ///
     /// # Panics
-    /// Panics with debug_assertions if `buffer` isn't aligned to `size_of::<nlmsghdr>`.
+    /// Panics with debug_assertions if `buffer` isn't aligned to `nlmsghdr`.
     pub fn recv_raw(&self, buffer: &mut [u8]) -> io::Result<usize> {
         debug_assert!(
             buffer.as_ptr().cast::<nlmsghdr>().is_aligned(),
