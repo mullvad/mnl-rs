@@ -1,5 +1,5 @@
 use core::option::Option;
-use libc::{c_char, c_int, c_uint, c_void, nlattr, nlmsghdr, pid_t, socklen_t, FILE};
+use libc::{FILE, c_char, c_int, c_uint, c_void, nlattr, nlmsghdr, pid_t, socklen_t};
 
 pub const MNL_SOCKET_AUTOPID: c_int = 0;
 pub const MNL_ALIGNTO: c_int = 4;
@@ -35,7 +35,7 @@ pub struct mnl_socket(c_void);
 #[repr(C)]
 pub struct mnl_nlmsg_batch(c_void);
 
-extern "C" {
+unsafe extern "C" {
     pub fn mnl_socket_open(bus: c_int) -> *mut mnl_socket;
 
     #[cfg(feature = "mnl-1-0-4")]
@@ -158,13 +158,13 @@ extern "C" {
     pub fn mnl_attr_put_u8_check(nlh: *mut nlmsghdr, buflen: usize, type_: u16, data: u8) -> bool;
 
     pub fn mnl_attr_put_u16_check(nlh: *mut nlmsghdr, buflen: usize, type_: u16, data: u16)
-        -> bool;
+    -> bool;
 
     pub fn mnl_attr_put_u32_check(nlh: *mut nlmsghdr, buflen: usize, type_: u16, data: u32)
-        -> bool;
+    -> bool;
 
     pub fn mnl_attr_put_u64_check(nlh: *mut nlmsghdr, buflen: usize, type_: u16, data: u64)
-        -> bool;
+    -> bool;
 
     pub fn mnl_attr_put_str_check(
         nlh: *mut nlmsghdr,

@@ -3,3 +3,5 @@ members = [
     "mnl-sys",
     "mnl",
 ]
+
+resolver = "3"

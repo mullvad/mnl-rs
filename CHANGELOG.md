@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Rename `Socket::recv` to `Socket::recv_raw`.
 - Add new `Socket::recv` that returns an iterator of netlink messages (`NlMessages`).
+- Update to Rust 2024 and bump MSRV to 1.85.
 
 
 ## [0.2.3] - 2025-10-28
