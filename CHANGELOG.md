@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+
+
+## [0.3.0] - 2025-11-17
 ### Changed
 - Rename `Socket::recv` to `Socket::recv_raw`.
 - Add new `Socket::recv` that returns an iterator of netlink messages (`NlMessages`).
