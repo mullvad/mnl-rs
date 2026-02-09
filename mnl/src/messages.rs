@@ -36,7 +36,7 @@ impl<'a> Iterator for NlMessages<'a> {
         }
 
         // Safety:
-        // nlmsghdr is a C struct, valid for all bit-patters, and we've checked alignment and length
+        // nlmsghdr is a C struct, valid for all bit-patterns, and we've checked alignment and length
         let header = unsafe { header.read() };
 
         let msg_len = header.nlmsg_len as usize;
