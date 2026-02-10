@@ -11,7 +11,7 @@ pub struct NlMessages<'a> {
 impl<'a> NlMessages<'a> {
     /// Iterate over a byte buffer of netlink messages.
     ///
-    /// `buffer` must be aligned to `size_of::<nlmsghdr>()`.
+    /// `buffer` must be aligned to `align_of::<nlmsghdr>()`.
     pub fn new(buffer: &'a [u8]) -> Self {
         Self { buffer }
     }
@@ -31,7 +31,7 @@ impl<'a> Iterator for NlMessages<'a> {
             self.buffer = &[];
             return Some(Err(io::Error::new(
                 io::ErrorKind::InvalidInput,
-                "Buffer is not aligned to size_of::<nlmsghdr>()",
+                "Buffer is not aligned to align_of::<nlmsghdr>()",
             )));
         }
 
