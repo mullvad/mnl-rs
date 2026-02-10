@@ -17,7 +17,7 @@ pub enum CbResult {
 pub type Callback<T> = fn(msg: &libc::nlmsghdr, data: &mut T) -> libc::c_int;
 
 /// Callback runqueue for netlink messages. Checks that all netlink messages in `buffer` are OK.
-/// `buffer` must be aligned to `size_of::<nlmsghdr>()`, or this fails.
+/// `buffer` must be aligned to `align_of::<nlmsghdr>()`, or this fails.
 pub fn cb_run(buffer: &[u8], seq: u32, portid: u32) -> io::Result<CbResult> {
     // NOTE: See comment on [`validate_messages`] for why we need to validate messages here.
     validate_messages(buffer)?;
@@ -35,7 +35,7 @@ pub fn cb_run(buffer: &[u8], seq: u32, portid: u32) -> io::Result<CbResult> {
 
 /// Callback runqueue for netlink messages. Checks that all netlink messages in `buffer` are OK.
 /// Calls the given `callback` if needed.
-/// `buffer` must be aligned to `size_of::<nlmsghdr>()`, or this fails.
+/// `buffer` must be aligned to `align_of::<nlmsghdr>()`, or this fails.
 pub fn cb_run2<T>(
     buffer: &[u8],
     seq: u32,

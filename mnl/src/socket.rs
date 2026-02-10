@@ -147,7 +147,7 @@ impl Socket {
     /// }
     /// ```
     ///
-    /// `buffer` must be aligned to `size_of::<nlmsghdr>`.
+    /// `buffer` must be aligned to `align_of::<nlmsghdr>`.
     pub fn recv<'a>(&self, buffer: &'a mut [u8]) -> io::Result<NlMessages<'a>> {
         let n = self.recv_raw(buffer)?;
         Ok(NlMessages::new(&buffer[..n]))
