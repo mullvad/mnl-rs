@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+### Fixed
+- Fix unsoundness in `cb_run` and `cb_run2` when called with malformed netlink messages.
+  This fixes RUSTSEC-2025-0142.
 
 
 ## [0.3.0] - 2025-11-17
